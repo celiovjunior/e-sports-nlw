@@ -8,9 +8,13 @@ const app = express();
 
 const prisma = new PrismaClient();
 
+// Permite que seja possível visualizar os dados em formato JSon
 app.use(express.json());
+
+// Permite que o API seja acessado por qualquer front end
 app.use(cors());
 
+// Rota para listar todos os games, utilizando a sintaxe do Prisma
 app.get('/games', async (request, response) => {
 
 	const games = await prisma.game.findMany({
@@ -26,6 +30,7 @@ app.get('/games', async (request, response) => {
 	return response.json(games);
 });
 
+// Rota para criar um AD dentro de um game
 app.post('/games/:id/ads', async (request, response) => {
 	const gameId = request.params.id;
 	const body = request.body;
@@ -43,10 +48,10 @@ app.post('/games/:id/ads', async (request, response) => {
 		}
 	})
 
-
 	return response.status(201).json(ad);
-})
+});
 
+// Lista todos os AD's de um único game, ignorando o dado 'discord'
 app.get('/games/:id/ads', async (request, response) => {
 	const gameId = request.params.id;
 
@@ -76,8 +81,9 @@ app.get('/games/:id/ads', async (request, response) => {
 			hourEnd: convertMinutesToHour(ad.hourEnd)
 		}
 	}))
-})
+});
 
+// Visualizar o discord que cadastrou o AD
 app.get('/ads/:id/discord', async (request, response) => {
 
 	const adId = request.params.id;
@@ -94,6 +100,7 @@ app.get('/ads/:id/discord', async (request, response) => {
 	return response.json({
 		discord: ad.discord
 	});
-})
+});
 
+// Porta
 app.listen(3333)
