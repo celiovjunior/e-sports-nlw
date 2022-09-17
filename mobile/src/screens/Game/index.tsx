@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { View, TouchableOpacity, Image, FlatList } from 'react-native';
+import { View, TouchableOpacity, Image, FlatList, Text } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { Entypo } from '@expo/vector-icons';
@@ -13,9 +13,11 @@ import { styles } from './styles';
 import { GameParams } from '../../@types/navigation';
 import { Heading } from '../../components/Heading';
 import { DuoCard, DuoCardProps } from '../../components/DuoCard';
+import { DuoMatch } from '../../components/DuoMatch';
 
 export function Game() {
   const [duos, setDuos] = useState<DuoCardProps[]>([]);
+  const [discordDuoSelected, setDiscordDuoSelected] = useState('celiovjunior#789');
 
   const navigation = useNavigation();
   const route = useRoute();
@@ -26,7 +28,7 @@ export function Game() {
   }
 
   useEffect(() => {
-    fetch(`http://192.168.0.100:3333/games/${game.id}/ads`)
+    fetch(`http://192.168.0.104:3333/games/${game.id}/ads`)
     .then(response => response.json())
     .then(data => {
       setDuos(data);
@@ -74,8 +76,19 @@ export function Game() {
             )}
             horizontal
             style={styles.containerList}
-            contentContainerStyle={styles.contentList}
+            contentContainerStyle={duos.length > 0 ? styles.contentList : styles.emptyListContent}
             showsHorizontalScrollIndicator={false}
+            ListEmptyComponent={() => (
+              <Text style={styles.emptyText}>
+                Não há anúncios publicados para esse jogo ainda.
+              </Text>
+            )}
+          />
+          <DuoMatch
+            visible={discordDuoSelected.length > 0}
+            discord="celiovjunior#458"
+            onClose={() => setDiscordDuoSelected("")}
+
           />
       </SafeAreaView>
     </Background>
