@@ -104,8 +104,8 @@ export function CreateAdModal() {
                             <ToggleGroup.Item value="6" className={`w-8 h-8 rounded ${weekDays.includes('6') ? 'bg-violet-500' : 'bg-zinc-900'}`} title="Sábado">S</ToggleGroup.Item>
                           
                           </ToggleGroup.Root>
-
                     </div>
+
                     <div className="flex flex-col gap-2 flex-1">
                         <label htmlFor="hourStart">Qual horário do dia?</label>
 
@@ -114,7 +114,9 @@ export function CreateAdModal() {
                             <Input name="hourEnd" type="time" placeholder="Até" id="hourEnd"/>
                         </div>
                     </div>
+                    
                 </div>
+
                 <label className="mt-2 flex items-center gap-2 text-sm">
                     <Checkbox.Root checked={useVoiceChannel} onCheckedChange={(checked) => {
                       if(checked === true) {
@@ -129,6 +131,7 @@ export function CreateAdModal() {
                     </Checkbox.Root>
                     Costumo me conectar no chat de voz
                 </label>
+
                 <footer className="mt-4 flex justify-end gap-4">
                     <Dialog.Close type="button" className="bg-zinc-500 px-5 h-12 rounded-md font-semibold hover:bg-zinc-600">Cancelar</Dialog.Close>
                     <button className="bg-violet-500 px-5 h-12 rounded-md font-semibold flex items-center gap-3 hover:bg-violet-600" type="submit">
